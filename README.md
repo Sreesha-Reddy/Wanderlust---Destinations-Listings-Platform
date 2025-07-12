@@ -61,7 +61,11 @@ The application includes robust **filtering** on the listings page to sort by **
 
 ### Database
 
-- MongoDB Atlas (cloud-hosted database)  
+- MongoDB Atlas (cloud-hosted database)
+
+### Cloud Setup
+
+- Cloudinary
 
 ### Deployment
 
