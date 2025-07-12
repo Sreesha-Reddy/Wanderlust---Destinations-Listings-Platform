@@ -1,0 +1,74 @@
+<% layout("layouts/boilerplate") %>
+
+<div id="filters">
+    <!-- All Filter -->
+    <a href="/listings"
+       class="filter <%= !category ? 'active' : '' %>">
+        <div class="filtericon">
+            <i class="fa-solid fa-globe"></i>
+        </div>
+        <p>All</p>
+    </a>
+    <% const categories = [
+        { name: "Trending", icon: "fa-fire-flame-curved" },
+        { name: "Rooms", icon: "fa-bed" },
+        { name: "Iconic cities", icon: "fa-mountain-city" },
+        { name: "Mountains", icon: "fa-mountain-sun" },
+        { name: "Beach", icon: "fa-umbrella-beach" },
+        { name: "Castles", icon: "fa-chess-rook" },
+        { name: "Swimming Pools", icon: "fa-person-swimming" },
+        { name: "Camping", icon: "fa-campground" },
+        { name: "Farmhouses", icon: "fa-tractor" },
+        { name: "Snowfields", icon: "fa-person-skiing" }
+    ]; %>
+
+    <% categories.forEach(cat => { %>
+        <a href="/listings?category=<%= encodeURIComponent(cat.name) %>"
+           class="filter <%= category === cat.name ? 'active' : '' %>">
+            <div class="filtericon">
+                <i class="fa-solid <%= cat.icon %>"></i>
+            </div>
+            <p><%= cat.name %></p>
+        </a>
+    <% }) %>
+    <div class="tax-switch">
+        <div class="form-check form-switch form-check-reverse">
+            <label class="form-check-label" for="switchCheckReverse">Prices after taxes</label>
+            <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+        </div>
+    </div>
+</div>
+
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <% for (let listing of allListings) {%>
+      <a href="/listings/<%= listing._id %>" class="listing-link">
+      <div class="card col listing-card">
+        <img src="<%= listing.image?.url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+           <div class="card-img-overlay"></div>
+        <div class="card-body">
+            <p class="card-text" style="text-align: center;">
+                <b><%= listing.title %></b> <br>
+                &#8377;<%= listing.price.toLocaleString('en-IN') %> / Night
+                <i class="tax-info">&nbsp;+18% GST</i>
+            </p>
+        </div>
+      </div>
+      </a>
+      <% } %>
+</div>
+
+<script>
+    let taxSwitch = document.getElementById('switchCheckReverse');
+    taxSwitch.addEventListener('click', () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for (info of taxInfo) {
+            if (info.style.display != "inline") {
+                info.style.display = "inline";
+            } else {
+                info.style.display = "none";
+            }
+        }
+    })
+</script>
+
